@@ -1,11 +1,14 @@
 import openai
 import streamlit as st
 
+
 def show_messages(text):
     messages_str = [
         f"{_['role']}: {_['content']}" for _ in st.session_state["messages"][1:]
     ]
-    text.text_area("Messages", value=str("\n\n".join(messages_str)), height=400)
+    text.text_area("Messages", value=str(
+        "\n\n".join(messages_str)), height=400)
+
 
 BASE_PROMPT = [{"role": "system", "content": "You are a helpful assistant."}]
 
@@ -14,8 +17,10 @@ if "messages" not in st.session_state:
 
 st.subheader("ChatGPT @ Davidleewli")
 
-openai.api_key = st.text_input("Paste your OpenAI API Key here", value="", type="password")
-prompt = st.text_input("Prompt", value="Enter your message here...")
+openai.api_key = st.text_input(
+    "Paste your OpenAI API Key here", value="", type="password")
+prompt = st.text_area(
+    "Prompt", value="", placeholder="Enter your message here...", height=10)
 
 if st.button("Send"):
     with st.spinner("Generating response..."):
